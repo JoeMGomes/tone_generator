@@ -10,30 +10,57 @@ type Pulse = Vec<f32>;
 type Seconds = f32;
 type Samples = f32;
 type Hz = f32;
+type Semitones = f32;
 
 const SAMPLE_RATE: Samples = 48000.0;
+const PITCH_STANDARD : Hz = 440.0;
 
 fn main() {
-    let  mut hz: Hz = 440.0;
-    let duration: Seconds = 1.5;
 
     let now = Instant::now();
-    let outputFirst: &mut Pulse = &mut Vec::new();
-    freq(hz, duration, outputFirst);
 
-    let outputSecond: &mut Pulse = &mut Vec::new();
-    hz = 540.0;
-    freq(hz, duration, outputSecond);
+    let mut output_1: Pulse = note(0.0, 1.0);
+    let  output_2: Pulse = note(2.0, 1.0);
+    let  output_3: Pulse = note(4.0, 1.0);
+    let  output_4: Pulse = note(5.0, 1.0);
+    let  output_5: Pulse = note(7.0, 1.0);
+    let  output_6: Pulse = note(9.0, 1.0);
+    let  output_7: Pulse = note(11.0, 1.0);
+    let  output_8: Pulse = note(12.0, 1.0);
 
-    outputFirst.append(outputSecond);
+    output_1.extend(output_2);
+    output_1.extend(output_3);
+    output_1.extend(output_4);
+    output_1.extend(output_5);
+    output_1.extend(output_6);
+    output_1.extend(output_7);
+    output_1.extend(output_8);
+    
 
     println!("RunTime: {}", now.elapsed().as_millis());
 
-    let write_r = write_to_file(outputFirst);
+    let write_r = write_to_file(&output_1);
     match write_r {
         Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
         Err(e) => println!("error parsing header: {:?}", e),
     }
+}
+
+fn note(tone: Semitones, duration : Seconds) -> Pulse {
+    println!("{:?}", semi_tone(tone));
+    return gen_pulse(semi_tone(tone), duration);
+}
+
+fn semi_tone( tone : Semitones) -> Hz {
+    let x : f32 = 2.0;
+    return PITCH_STANDARD * (x.powf(1.0/12.0)).powf(tone);
+}
+
+fn gen_pulse(hz: Hz, duration : Seconds) -> Pulse{
+
+    let output: &mut Pulse = &mut Vec::new();
+    freq(hz, duration, output);
+    return output.to_vec();
 }
 
 fn freq(hz: Hz, duration: Seconds, output_pulse: &mut Pulse) {
