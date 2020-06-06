@@ -16,23 +16,23 @@ fn main() {
     let now = Instant::now();
 
     let  c: Pulse      = note(-9.0,  1.0);
-    let  c_sus : Pulse = note(-8.0,  1.0);
+    // let  c_sus : Pulse = note(-8.0,  1.0);
     let  d: Pulse      = note(-7.0,  1.0);
-    let  d_sus: Pulse  = note(-6.0,  1.0);
+    // let  d_sus: Pulse  = note(-6.0,  1.0);
     let  e: Pulse      = note(-5.0,  1.0);
     let  f : Pulse     = note(-4.0,  1.0);
-    let  f_sus : Pulse = note(-3.0,  1.0);
+    // let  f_sus : Pulse = note(-3.0,  1.0);
     let  g : Pulse     = note(-2.0,  1.0);
-    let  g_sus : Pulse = note(-1.0,  1.0);
+    // let  g_sus : Pulse = note(-1.0,  1.0);
     let  a: Pulse      = note( 0.0,  1.0);
-    let  a_sus: Pulse  = note( 1.0,  1.0);
+    // let  a_sus: Pulse  = note( 1.0,  1.0);
     let  b: Pulse      = note( 2.0,  1.0);
     let  d_high: Pulse = note( 3.0,  1.0);
 
-    let temp_d = combine_pulse(&a,&c_sus);
-    let d_major = combine_pulse(&temp_d, &e);
-    let temp_a = combine_pulse(&a,&d);
-    let a_major = combine_pulse(&temp_a, &f_sus);
+    // let temp_d = combine_pulse(&a,&c_sus);
+    // let d_major = combine_pulse(&temp_d, &e);
+    // let temp_a = combine_pulse(&a,&d);
+    // let a_major = combine_pulse(&temp_a, &f_sus);
 
     let mut output = Vec::new();
     output.extend(c.clone());
