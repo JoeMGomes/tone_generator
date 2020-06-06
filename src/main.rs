@@ -1,4 +1,3 @@
-use std::f32::consts::PI;
 use std::fs::File;
 use std::io::prelude::*;
 use std::time::Instant;
@@ -6,74 +5,78 @@ extern crate byteorder;
 
 use byteorder::{LittleEndian, WriteBytesExt};
 
-type Pulse = Vec<f32>;
-type Seconds = f32;
-type Samples = f32;
-type Hz = f32;
-type Semitones = f32;
+mod types;
+pub use crate::types::*;
 
-const SAMPLE_RATE: Samples = 48000.0;
-const PITCH_STANDARD : Hz = 440.0;
+mod pulse_math;
+pub use crate::pulse_math::*;
 
 fn main() {
 
     let now = Instant::now();
 
-    let mut output_1: Pulse = note(0.0, 1.0);
-    let  output_2: Pulse = note(2.0, 1.0);
-    let  output_3: Pulse = note(4.0, 1.0);
-    let  output_4: Pulse = note(5.0, 1.0);
-    let  output_5: Pulse = note(7.0, 1.0);
-    let  output_6: Pulse = note(9.0, 1.0);
-    let  output_7: Pulse = note(11.0, 1.0);
-    let  output_8: Pulse = note(12.0, 1.0);
+    let  c: Pulse      = note(-9.0,  1.0);
+    let  c_sus : Pulse = note(-8.0,  1.0);
+    let  d: Pulse      = note(-7.0,  1.0);
+    let  d_sus: Pulse  = note(-6.0,  1.0);
+    let  e: Pulse      = note(-5.0,  1.0);
+    let  f : Pulse     = note(-4.0,  1.0);
+    let  f_sus : Pulse = note(-3.0,  1.0);
+    let  g : Pulse     = note(-2.0,  1.0);
+    let  g_sus : Pulse = note(-1.0,  1.0);
+    let  a: Pulse      = note( 0.0,  1.0);
+    let  a_sus: Pulse  = note( 1.0,  1.0);
+    let  b: Pulse      = note( 2.0,  1.0);
+    let  d_high: Pulse = note( 3.0,  1.0);
 
-    output_1.extend(output_2);
-    output_1.extend(output_3);
-    output_1.extend(output_4);
-    output_1.extend(output_5);
-    output_1.extend(output_6);
-    output_1.extend(output_7);
-    output_1.extend(output_8);
-    
+    let temp_d = combine_pulse(&a,&c_sus);
+    let d_major = combine_pulse(&temp_d, &e);
+    let temp_a = combine_pulse(&a,&d);
+    let a_major = combine_pulse(&temp_a, &f_sus);
+
+    let mut output = Vec::new();
+    output.extend(c.clone());
+    // output.extend(c_sus.clone());
+    output.extend(d.clone());
+    // output.extend(d_sus.clone());
+    output.extend(e.clone());
+    output.extend(f.clone());
+    // output.extend(f_sus.clone());
+    output.extend(g.clone());
+    // output.extend(g_sus.clone());
+    output.extend(a.clone());
+    // output.extend(a_sus.clone());
+    output.extend(b.clone());
+    output.extend(d_high.clone());
 
     println!("RunTime: {}", now.elapsed().as_millis());
 
-    let write_r = write_to_file(&output_1);
+    let write_r = write_to_file(&output);
     match write_r {
         Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
-        Err(e) => println!("error parsing header: {:?}", e),
+        Err(e) => println!("Exportin to bin: {:?}", e),
     }
+    // let r = write_csv(&output);
+    // match r {
+    //     Ok(()) => (),
+    //     Err(e) => println!("Error exporting to csv: {:?}", e),
+    // }
 }
 
-fn note(tone: Semitones, duration : Seconds) -> Pulse {
-    println!("{:?}", semi_tone(tone));
-    return gen_pulse(semi_tone(tone), duration);
-}
+fn _write_csv(pulse: &Pulse) -> std::io::Result<()> {
+    let mut pos = 0;
+    let mut buffer = File::create("output.csv")?;
 
-fn semi_tone( tone : Semitones) -> Hz {
-    let x : f32 = 2.0;
-    return PITCH_STANDARD * (x.powf(1.0/12.0)).powf(tone);
-}
 
-fn gen_pulse(hz: Hz, duration : Seconds) -> Pulse{
-
-    let output: &mut Pulse = &mut Vec::new();
-    freq(hz, duration, output);
-    return output.to_vec();
-}
-
-fn freq(hz: Hz, duration: Seconds, output_pulse: &mut Pulse) {
-    let sample_number: usize = (SAMPLE_RATE * duration) as usize;
-
-    for i in 0..sample_number {
-        let step = (hz * 2.0 * PI) / SAMPLE_RATE;
-        let volume = 0.5;
-        let sample: f32 = ((i as f32) * step).sin() * volume;
-
-        output_pulse.push(sample);
+    while pos < pulse.len() {
+        let v = pulse[pos].to_string() + ",\n"; 
+        let _bytes_written = buffer.write(v.as_bytes())?;
+        pos += 1;
     }
+
+    Ok(())
 }
+
 
 fn write_to_file(data: &Pulse) -> std::io::Result<()> {
     let mut pos = 0;
