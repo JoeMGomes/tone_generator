@@ -1,0 +1,41 @@
+
+    add_pulse(&mut track, &_a_sus);
+    add_pulse(&mut track, &_a_sus);
+    add_pulse(&mut track, &_a_sus);
+    add_pulse(&mut track, &_a_sus);
+
+    add_pulse(&mut track, &_d);
+    add_pulse(&mut track, &_d);
+    add_pulse(&mut track, &_d);
+    add_pulse(&mut track, &_d);
+
+    add_pulse(&mut track, &_c);
+    add_pulse(&mut track, &_c);
+    add_pulse(&mut track, &_c);
+    add_pulse(&mut track, &_c);
+
+    add_pulse(&mut track, &_f);
+    add_pulse(&mut track, &_f);
+    add_pulse(&mut track, &_f);
+    add_pulse(&mut track, &_f);
+
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+    add_pulse(&mut track, &_g);
+
+    add_pulse(&mut track, &_c);
+    add_pulse(&mut track, &_a_sus);
+    add_pulse(&mut track, &_a);
+    add_pulse(&mut track, &_f);
+    add_pulse(&mut track, &_g);
