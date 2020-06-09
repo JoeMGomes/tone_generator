@@ -57,7 +57,7 @@ pub fn gen_release(duration: Seconds) -> Pulse {
 /// element-wise multiplication for vecs
 pub fn combine_pulse(v1: &Pulse, v2: &Pulse) -> Pulse {
     if v1.len() != v2.len() {
-        panic!("Cannot multiply vectors of different lengths!")
+        panic!("Cannot add vectors of different lengths!")
     }
 
     v1.iter().zip(v2).map(|(&i1, &i2)| i1 + i2).collect()

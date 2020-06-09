@@ -2,6 +2,7 @@ use std::fs::File;
 use std::io::prelude::*;
 use std::time::Instant;
 extern crate byteorder;
+extern crate json;
 
 use byteorder::{LittleEndian, WriteBytesExt};
 
@@ -23,34 +24,34 @@ fn main() {
 
     let mut track = get_pulse(25.0);
 
-    let  _c: Pulse      = pluck_note(-9.0,  0.5);
-    let  _c_sus : Pulse = pluck_note(-8.0,  0.5);
-    let  _d: Pulse      = pluck_note(-7.0,  0.5);
-    let  _d_sus: Pulse  = pluck_note(-6.0,  0.5);
-    let  _e: Pulse      = pluck_note(-5.0,  0.5);
-    let  _f : Pulse     = pluck_note(-4.0,  0.5);
-    let  _f_sus : Pulse = pluck_note(-3.0,  0.5);
-    let  _g : Pulse     = pluck_note(-2.0,  0.5);
-    let  _g_sus : Pulse = pluck_note(-1.0,  0.5);
-    let  _a: Pulse      = pluck_note( 0.0,  0.5);
-    let  _a_sus: Pulse  = pluck_note( 1.0,  0.5);
-    let  _b: Pulse      = pluck_note( 2.0,  0.5);
-    let  _d_high: Pulse = pluck_note( 3.0,  0.5);
+    // let  _c: Pulse      = pluck_note(-9.0,  0.5);
+    // let  _c_sus : Pulse = pluck_note(-8.0,  0.5);
+    // let  _d: Pulse      = pluck_note(-7.0,  0.5);
+    // let  _d_sus: Pulse  = pluck_note(-6.0,  0.5);
+    // let  _e: Pulse      = pluck_note(-5.0,  0.5);
+    // let  _f : Pulse     = pluck_note(-4.0,  0.5);
+    // let  _f_sus : Pulse = pluck_note(-3.0,  0.5);
+    // let  _g : Pulse     = pluck_note(-2.0,  0.5);
+    // let  _g_sus : Pulse = pluck_note(-1.0,  0.5);
+    // let  _a: Pulse      = pluck_note( 0.0,  0.5);
+    // let  _a_sus: Pulse  = pluck_note( 1.0,  0.5);
+    // let  _b: Pulse      = pluck_note( 2.0,  0.5);
+    // let  _d_high: Pulse = pluck_note( 3.0,  0.5);
 
-    parse_file();
+    parse_file(&mut track);
 
     println!("RunTime: {}", now.elapsed().as_millis());
 
-    // let write_r = write_to_file(&track);
-    // match write_r {
-    //     Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
-    //     Err(e) => println!("Exportin to bin: {:?}", e),
-    // }
-    // let r = write_csv(&output);
-    // match r {
-    //     Ok(()) => (),
-    //     Err(e) => println!("Error exporting to csv: {:?}", e),
-    // }
+    let write_r = write_to_file(&track);
+    match write_r {
+        Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
+        Err(e) => println!("Exportin to bin: {:?}", e),
+    }
+    let r = _write_csv(&track);
+    match r {
+        Ok(()) => (),
+        Err(e) => println!("Error exporting to csv: {:?}", e),
+    }
 }
 
 fn _write_csv(pulse: &Pulse) -> std::io::Result<()> {
