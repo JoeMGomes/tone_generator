@@ -38,7 +38,10 @@ fn main() {
     // let  _b: Pulse      = pluck_note( 2.0,  0.5);
     // let  _d_high: Pulse = pluck_note( 3.0,  0.5);
 
-    parse_file(&mut track);
+    match parse_file(&mut track){
+        Ok(_e) => (),
+        Err(e) => panic!("Failed on write: {}",e)
+    };
 
     println!("RunTime: {}", now.elapsed().as_millis());
 

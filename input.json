@@ -4,12 +4,19 @@
     "PITCH_STANDARD": 440.0,
     "track": [
         {
-            "notes": ["A", "A#", "B"],
+            "notes": ["A"],
             "duration": 1.0
         },
         {
+            
             "notes": ["C"],
-            "duration": 3.0
+            "duration": 1.0
+        },
+
+        {
+            
+            "notes": ["B"],
+            "duration": 1.0
         }
     ]
 }
