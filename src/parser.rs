@@ -7,10 +7,10 @@ use std::str;
 
 use crate::types::*;
 use crate::freq_generator::{note};
-use crate::pulse_math::{combine_pulse, add_pulse,get_pulse};
+use crate::pulse_math::{add_pulse, append_pulse, pluck_pulse};
 
-pub fn parse_file(output: &mut Pulse) -> io::Result<()> {
-    let mut f = File::open("input.json").unwrap();
+pub fn parse_file(filename: &str, output: &mut Pulse) -> io::Result<()> {
+    let mut f = File::open(filename).unwrap();
     let mut content = vec![];
     f.read_to_end(&mut content).unwrap();
 
@@ -44,36 +44,65 @@ pub fn parse_track(output: &mut Pulse, track: &json::JsonValue) {
 }
 
 fn parse_block(output: &mut Pulse, block: &JsonValue) {
-    // println!("Notes: {}\nDuration: {}", block["notes"], block["duration"]);
-    // println!("Nº of: {}", block["notes"][0]);
 
-    
     let duration = block["duration"].as_f32().unwrap();
-    let mut chord: Pulse = get_pulse(duration);
+    let mut chord: Pulse = Vec::new();
 
     println!("Duration: {}", duration);
 
     for i in 0..block["notes"].len() {
-        let temp = &block["notes"][i];
-        let note_str: &str = temp.as_str().unwrap();
+
+        let note_str =  &block["notes"][i].as_str().unwrap();
 
         let freq = name_to_freq(note_str);
 
         let pulse = note(freq, duration);
-        chord = combine_pulse(&chord, &pulse);
+        //first note
+        if chord.len() == 0 {
+            chord = pulse;
+        } else{
+            chord = add_pulse(&chord, &pulse);
+        }
         println!("Name: {} Semi: {}", note_str, freq);
     }
+    pluck_pulse(chord.as_mut());
 
-    add_pulse(output, &chord);
+    append_pulse(output, &chord);
 }
 
 fn name_to_freq(name: &str) -> Hz {
     let freq = match name {
-        "A" => 0.0,
-        "A#" => 1.0,
-        "B" => 2.0,
-        "C" => 3.0,
-        _ => 0.0,
+        "C3" => -21.0,
+        "C#3" => -20.0,
+        "D3" => -19.0,
+        "D#3" => -18.0,
+        "E3" => -17.0,
+        "F3" => -16.0,
+        "F#3" => -15.0,
+        "G3" => -14.0,
+        "G#3" => -13.0,
+        "A3" => -12.0,
+        "A#3" => -11.0,
+        "B3" => -10.0,
+        "C" | "C4" => -9.0,
+        "C#" | "C#4" => -8.0,
+        "D" | "D4" => -7.0,
+        "D#" | "D#4" => -6.0,
+        "E" | "E4" => -5.0,
+        "F" | "F4" => -4.0,
+        "F#" | "F#4" => -3.0,
+        "G" | "G4" => -2.0,
+        "G#" | "G#4" => -1.0,
+        "A" | "A4" => 0.0,
+        "A#" | "A#4" => 1.0,
+        "B" | "B4" => 2.0,
+        "C5" => 3.0,
+        "C#5" => 4.0,
+        "D5" => 5.0,
+        "D#5" => 6.0,
+        "E5" => 7.0,
+        "F5" => 8.0,
+        _ => -30.0,
     };
 
     return freq;

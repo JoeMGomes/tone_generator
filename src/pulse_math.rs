@@ -5,6 +5,10 @@ pub fn pluck_note(tone: Semitones, beats : Beats) -> Pulse {
     return release(&attack(&note(tone, beats)));
 }
 
+pub fn pluck_pulse(pulse: &mut Pulse){
+    release(&attack(pulse));
+}
+
 pub fn attack(pulse: &Pulse) -> Pulse {
     let duration = (pulse.len() as f32) / SAMPLE_RATE;
     return mul_pulse(pulse, &gen_attack(duration));
@@ -55,7 +59,7 @@ pub fn gen_release(duration: Seconds) -> Pulse {
 }
 
 /// element-wise multiplication for vecs
-pub fn combine_pulse(v1: &Pulse, v2: &Pulse) -> Pulse {
+pub fn add_pulse(v1: &Pulse, v2: &Pulse) -> Pulse {
     if v1.len() != v2.len() {
         panic!("Cannot add vectors of different lengths!")
     }
@@ -72,14 +76,8 @@ pub fn mul_pulse(v1: &Pulse, v2: &Pulse) -> Pulse {
     v1.iter().zip(v2).map(|(&i1, &i2)| i1 * i2).collect()
 }
 
-pub fn add_pulse(dest: &mut Pulse, v2: &Pulse) {
-    if dest.capacity() - dest.len() < v2.len() {
-        panic!(
-            "Destination pulse does not have enough space. Free space: {} Tried to use: {}",
-            dest.capacity() - dest.len(),
-            v2.len()
-        );
-    }
+pub fn append_pulse(dest: &mut Pulse, v2: &Pulse) {
+
     dest.extend(v2.clone());
 }
 

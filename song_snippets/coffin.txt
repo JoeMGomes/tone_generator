@@ -1,41 +1,55 @@
+    // let  _c: Pulse      = pluck_note(-9.0,  0.5);
+    // let  _c_sus : Pulse = pluck_note(-8.0,  0.5);
+    // let  _d: Pulse      = pluck_note(-7.0,  0.5);
+    // let  _d_sus: Pulse  = pluck_note(-6.0,  0.5);
+    // let  _e: Pulse      = pluck_note(-5.0,  0.5);
+    // let  _f : Pulse     = pluck_note(-4.0,  0.5);
+    // let  _f_sus : Pulse = pluck_note(-3.0,  0.5);
+    // let  _g : Pulse     = pluck_note(-2.0,  0.5);
+    // let  _g_sus : Pulse = pluck_note(-1.0,  0.5);
+    // let  _a: Pulse      = pluck_note( 0.0,  0.5);
+    // let  _a_sus: Pulse  = pluck_note( 1.0,  0.5);
+    // let  _b: Pulse      = pluck_note( 2.0,  0.5);
+    // let  _d_high: Pulse = pluck_note( 3.0,  0.5);
 
-    add_pulse(&mut track, &_a_sus);
-    add_pulse(&mut track, &_a_sus);
-    add_pulse(&mut track, &_a_sus);
-    add_pulse(&mut track, &_a_sus);
 
-    add_pulse(&mut track, &_d);
-    add_pulse(&mut track, &_d);
-    add_pulse(&mut track, &_d);
-    add_pulse(&mut track, &_d);
+    append_pulse(&mut track, &_a_sus);
+    append_pulse(&mut track, &_a_sus);
+    append_pulse(&mut track, &_a_sus);
+    append_pulse(&mut track, &_a_sus);
 
-    add_pulse(&mut track, &_c);
-    add_pulse(&mut track, &_c);
-    add_pulse(&mut track, &_c);
-    add_pulse(&mut track, &_c);
+    append_pulse(&mut track, &_d);
+    append_pulse(&mut track, &_d);
+    append_pulse(&mut track, &_d);
+    append_pulse(&mut track, &_d);
 
-    add_pulse(&mut track, &_f);
-    add_pulse(&mut track, &_f);
-    add_pulse(&mut track, &_f);
-    add_pulse(&mut track, &_f);
+    append_pulse(&mut track, &_c);
+    append_pulse(&mut track, &_c);
+    append_pulse(&mut track, &_c);
+    append_pulse(&mut track, &_c);
 
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_f);
+    append_pulse(&mut track, &_f);
+    append_pulse(&mut track, &_f);
+    append_pulse(&mut track, &_f);
 
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
 
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
-    add_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
 
-    add_pulse(&mut track, &_c);
-    add_pulse(&mut track, &_a_sus);
-    add_pulse(&mut track, &_a);
-    add_pulse(&mut track, &_f);
-    add_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+    append_pulse(&mut track, &_g);
+
+    append_pulse(&mut track, &_c);
+    append_pulse(&mut track, &_a_sus);
+    append_pulse(&mut track, &_a);
+    append_pulse(&mut track, &_f);
+    append_pulse(&mut track, &_g);

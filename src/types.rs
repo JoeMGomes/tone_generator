@@ -1,6 +1,6 @@
 
 pub const SAMPLE_RATE: Samples = 48000.0;
-pub const PITCH_STANDARD : Hz = 440.0;
+pub const PITCH_STANDARD : Hz = 880.0;
 pub const BPM : Beats = 120.0;
 pub const BEAT_DURATION : Seconds = 60.0/BPM;
 
