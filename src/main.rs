@@ -42,12 +42,18 @@ fn main() {
                 .long("output")
                 .takes_value(true)
                 .help("Output .bin file name"),
+        ).arg(
+            Arg::with_name("csv")
+            .short("c")
+            .long("csv")
+            .takes_value(false)
+            .help("Outputs file as csv"),
         )
         .get_matches();
 
-    let filename = matches.value_of("file").unwrap_or("input.json");
+    let filename = matches.value_of("input").unwrap_or("input.json");
 
-    let _outname = matches.value_of("file").unwrap_or("output.bin");
+    let _outname = matches.value_of("output").unwrap_or("output.bin");
 
 
     match parse_file(filename, &mut track) {
@@ -57,21 +63,25 @@ fn main() {
 
     println!("RunTime: {}", now.elapsed().as_millis());
 
-    let write_r = write_to_file(&track);
+    let write_r = write_to_file(&track, _outname);
     match write_r {
         Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
         Err(e) => println!("Exportin to bin: {:?}", e),
     }
-    // let r = _write_csv(&track);
-    // match r {
-    //     Ok(()) => (),
-    //     Err(e) => println!("Error exporting to csv: {:?}", e),
-    // }
+
+    let csv = matches.occurrences_of("csv");
+    if csv >= 1 {
+        let r = _write_csv(&track, _outname);
+        match r {
+            Ok(()) => (),
+            Err(e) => println!("Error exporting to csv: {:?}", e),
+        }
+    }
 }
 
-fn _write_csv(pulse: &Pulse) -> std::io::Result<()> {
+fn _write_csv(pulse: &Pulse, filename: &str) -> std::io::Result<()> {
     let mut pos = 0;
-    let mut buffer = File::create("output.csv")?;
+    let mut buffer = File::create(format!("{}{}",filename , ".csv"))?;
 
     while pos < pulse.len() {
         let v = pulse[pos].to_string() + ",\n";
@@ -82,9 +92,9 @@ fn _write_csv(pulse: &Pulse) -> std::io::Result<()> {
     Ok(())
 }
 
-fn write_to_file(data: &Pulse) -> std::io::Result<()> {
+fn write_to_file(data: &Pulse, filename: &str) -> std::io::Result<()> {
     let mut pos = 0;
-    let mut buffer = File::create("output.bin")?;
+    let mut buffer = File::create(filename)?;
 
     let mut result: Vec<u8> = Vec::new();
     for &n in data {
