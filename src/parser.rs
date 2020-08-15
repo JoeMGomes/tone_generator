@@ -17,17 +17,6 @@ pub fn parse_file(filename: &str, output: &mut Pulse) -> io::Result<()> {
     let str_content = str::from_utf8(&content).unwrap();
     let j_con = json::parse(str_content).unwrap();
 
-    println!(
-        "BPM: {}
-SAMPLE_RATE: {},
-PITCH_STANDARD: {},
-Track Size: {}",
-        j_con["BPM"],
-        j_con["SAMPLE_RATE"],
-        j_con["PITCH_STANDARD"],
-        j_con["track"].len()
-    );
-
     parse_track(output, &j_con["track"]);
 
     Ok(())
@@ -37,7 +26,6 @@ pub fn parse_track(output: &mut Pulse, track: &json::JsonValue) {
     let mut c = 0;
     let len = track.len();
     while c < len {
-        println!("\nblock: {}", track[c]);
         parse_block(output, &track[c]);
         c += 1;
     }
@@ -47,8 +35,6 @@ fn parse_block(output: &mut Pulse, block: &JsonValue) {
 
     let duration = block["duration"].as_f32().unwrap();
     let mut chord: Pulse = Vec::new();
-
-    println!("Duration: {}", duration);
 
     for i in 0..block["notes"].len() {
 
@@ -63,7 +49,6 @@ fn parse_block(output: &mut Pulse, block: &JsonValue) {
         } else{
             chord = add_pulse(&chord, &pulse);
         }
-        println!("Name: {} Semi: {}", note_str, freq);
     }
     pluck_pulse(chord.as_mut());
 

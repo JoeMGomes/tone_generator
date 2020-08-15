@@ -1,6 +1,5 @@
 use std::fs::File;
 use std::io::prelude::*;
-use std::time::Instant;
 extern crate byteorder;
 extern crate clap;
 extern crate json;
@@ -21,7 +20,6 @@ mod parser;
 pub use crate::parser::*;
 
 fn main() {
-    let now = Instant::now();
 
     let mut track = get_pulse(25.0);
 
@@ -61,12 +59,11 @@ fn main() {
         Err(e) => panic!("Failed on write: {}", e),
     };
 
-    println!("RunTime: {}", now.elapsed().as_millis());
 
     let write_r = write_to_file(&track, _outname);
     match write_r {
-        Ok(()) => println!("RunTime: {}", now.elapsed().as_millis()),
-        Err(e) => println!("Exportin to bin: {:?}", e),
+        Ok(()) => (),
+        Err(e) => println!("Exporting to bin: {:?}", e),
     }
 
     let csv = matches.occurrences_of("csv");
